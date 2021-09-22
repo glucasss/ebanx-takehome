@@ -1,7 +1,7 @@
 package com.ebanx.takehome.service;
 
-import com.ebanx.takehome.vo.AccountVO;
+import java.math.BigDecimal;
 
 public interface AccountService {
-    AccountVO getBalance(int accountId);
+    BigDecimal getBalance(int accountId);
 }
