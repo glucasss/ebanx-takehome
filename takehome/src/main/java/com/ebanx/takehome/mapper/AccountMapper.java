@@ -19,7 +19,7 @@ public class AccountMapper {
         return vo;
     }
 
-    public static BalanceResultVO toBalanceResultVO(Account acc) {
+    public static BalanceResultVO toBalanceResultVO(Account acc, Boolean withdraw) {
         if(acc == null) {
             return null;
         }
@@ -29,7 +29,12 @@ public class AccountMapper {
 
         accountVO.setId(String.valueOf(acc.getAccountId()));
         accountVO.setBalance(acc.getBalance());
-        vo.setAccountVO(accountVO);
+        if(withdraw) {
+            vo.setOrigin(accountVO);
+        } else {
+            vo.setDestination(accountVO);
+        }
+
 
         return vo;
     }

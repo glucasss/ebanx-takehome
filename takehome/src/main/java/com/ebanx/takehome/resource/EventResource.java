@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.NotFoundException;
+
 @RestController
 @RequestMapping("/event")
 public class EventResource {
@@ -21,10 +23,11 @@ public class EventResource {
     @PostMapping
     public ResponseEntity<String> event(@RequestBody  EventVO eventVO) {
         EventsTypeEnum event = EventsTypeEnum.fromString(eventVO.getType());
+        String res;
 
         switch(event) {
             case DEPOSIT:
-                String res = eventService.deposit(eventVO);
+                res = eventService.deposit(eventVO);
                 return ResponseEntity
                         .status(HttpStatus.CREATED)
                         .body(res);
@@ -32,13 +35,20 @@ public class EventResource {
                 System.out.println("transfer");
                 return null;
             case WITHDRAW:
-                System.out.println("withdraw");
-                return null;
+                try {
+                    res = eventService.withdraw(eventVO);
+                    return ResponseEntity
+                            .status(HttpStatus.CREATED)
+                            .body(res);
+                } catch (NotFoundException e) {
+                    return ResponseEntity
+                            .status(HttpStatus.NOT_FOUND)
+                            .body("0");
+                }
             default :
                 System.out.println("unknown");
                 return null;
         }
-
     }
 
 }
