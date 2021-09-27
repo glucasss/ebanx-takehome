@@ -2,6 +2,7 @@ package com.ebanx.takehome.mapper;
 
 import com.ebanx.takehome.model.Account;
 import com.ebanx.takehome.vo.AccountVO;
+import com.ebanx.takehome.vo.BalanceResultVO;
 
 public class AccountMapper {
 
@@ -12,8 +13,23 @@ public class AccountMapper {
 
         AccountVO vo = new AccountVO();
 
-        vo.setAccountId(acc.getAccountId());
+        vo.setId(String.valueOf(acc.getAccountId()));
         vo.setBalance(acc.getBalance());
+
+        return vo;
+    }
+
+    public static BalanceResultVO toBalanceResultVO(Account acc) {
+        if(acc == null) {
+            return null;
+        }
+
+        BalanceResultVO vo = new BalanceResultVO();
+        AccountVO accountVO = new AccountVO();
+
+        accountVO.setId(String.valueOf(acc.getAccountId()));
+        accountVO.setBalance(acc.getBalance());
+        vo.setAccountVO(accountVO);
 
         return vo;
     }

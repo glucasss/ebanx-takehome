@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 
 public class AccountVO {
 
-    private int accountId;
+    private String id;
     private BigDecimal balance;
 
-    public int getAccountId(){return this.accountId;}
+    public String getId(){return this.id;}
     public BigDecimal getBalance(){return this.balance;}
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setBalance(BigDecimal balance) {
