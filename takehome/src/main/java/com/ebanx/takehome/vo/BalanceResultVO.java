@@ -2,8 +2,8 @@ package com.ebanx.takehome.vo;
 
 public class BalanceResultVO {
 
-    AccountVO destination;
     AccountVO origin;
+    AccountVO destination;
 
     public void setDestination(AccountVO accountVO) {
         this.destination = accountVO;

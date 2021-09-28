@@ -29,21 +29,29 @@ public class EventResource {
             case DEPOSIT:
                 res = eventService.deposit(eventVO);
                 return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(res);
+            case TRANSFER:
+                try {
+                    res = eventService.transfer(eventVO);
+                    return ResponseEntity
                         .status(HttpStatus.CREATED)
                         .body(res);
-            case TRANSFER:
-                System.out.println("transfer");
-                return null;
+                } catch (NotFoundException e) {
+                    return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("0");
+                }
             case WITHDRAW:
                 try {
                     res = eventService.withdraw(eventVO);
                     return ResponseEntity
-                            .status(HttpStatus.CREATED)
-                            .body(res);
+                        .status(HttpStatus.CREATED)
+                        .body(res);
                 } catch (NotFoundException e) {
                     return ResponseEntity
-                            .status(HttpStatus.NOT_FOUND)
-                            .body("0");
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("0");
                 }
             default :
                 System.out.println("unknown");

@@ -6,4 +6,5 @@ public interface EventService {
 
     String deposit(EventVO eventVO);
     String withdraw(EventVO eventVO);
+    String transfer(EventVO eventVO);
 }

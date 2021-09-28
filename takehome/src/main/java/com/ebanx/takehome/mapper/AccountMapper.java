@@ -35,6 +35,21 @@ public class AccountMapper {
             vo.setDestination(accountVO);
         }
 
+        return vo;
+    }
+
+    public static BalanceResultVO toTransferResultVO(Account origin, Account destination) {
+        BalanceResultVO vo = new BalanceResultVO();
+        AccountVO originVO = new AccountVO();
+        AccountVO destinationVO = new AccountVO();
+
+        originVO.setId(String.valueOf(origin.getAccountId()));
+        originVO.setBalance(origin.getBalance());
+        destinationVO.setId(String.valueOf(destination.getAccountId()));
+        destinationVO.setBalance(destination.getBalance());
+
+        vo.setOrigin(originVO);
+        vo.setDestination(destinationVO);
 
         return vo;
     }

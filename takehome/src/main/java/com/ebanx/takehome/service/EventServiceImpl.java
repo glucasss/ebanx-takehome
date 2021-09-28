@@ -41,6 +41,34 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public String transfer(EventVO eventVO) {
+        Account origin = accountRepository.findById(Integer.valueOf(eventVO.getOrigin()))
+            .orElseThrow(NotFoundException::new);
+        Account destination = accountRepository.findById(Integer.valueOf(eventVO.getDestination()))
+            .orElse(null);
+
+        BigDecimal originNewBalance = origin.getBalance().subtract(eventVO.getAmount());
+        origin.setBalance(originNewBalance);
+        accountRepository.save(origin);
+
+        if(destination == null) {
+            destination = new Account();
+            destination.setAccountId(Integer.parseInt(eventVO.getDestination()));
+            destination.setBalance(eventVO.getAmount());
+        } else {
+            BigDecimal newDestinationBalance = destination
+                    .getBalance().add(eventVO.getAmount());
+            destination.setBalance(newDestinationBalance);
+        }
+
+        accountRepository.save(destination);
+
+        BalanceResultVO vo = AccountMapper.toTransferResultVO(origin, destination);
+
+        return new Gson().toJson(vo);
+    }
+
+    @Override
     public String withdraw(EventVO eventVO) {
         Account acc = accountRepository.findById(Integer.valueOf(eventVO.getOrigin()))
             .orElseThrow(NotFoundException::new);
